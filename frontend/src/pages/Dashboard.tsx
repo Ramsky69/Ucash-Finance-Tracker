@@ -144,7 +144,7 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    logout(); // Call the logout function from AuthContext
+    logout(); 
     setShowLogoutModal(false);
   };
 
@@ -155,22 +155,22 @@ const Dashboard = () => {
   }, {} as { [key: string]: number });
   
   const chartData = {
-    labels: [...Object.keys(categoryTotals), 'Remaining Budget'], // Add "Remaining Budget" as a label
+    labels: [...Object.keys(categoryTotals), 'Remaining Budget'], 
     datasets: [
       {
         data: [
           ...Object.values(categoryTotals),
-          Math.max(budget - totalExpenses, 0), // Calculate remaining budget
+          Math.max(budget - totalExpenses, 0), 
         ],
         backgroundColor: [
           ...Object.keys(categoryTotals).map(
-            (category) => categoryColors[category] || '#D1D5DB' // Use category colors or default gray
+            (category) => categoryColors[category] || '#D1D5DB' 
           ),
           '#34D399', // Green for remaining budget
         ],
         hoverBackgroundColor: [
           ...Object.keys(categoryTotals).map(
-            (category) => categoryColors[category] || '#9CA3AF' // Use category hover colors or default gray
+            (category) => categoryColors[category] || '#9CA3AF' 
           ),
           '#10B981', // Darker green for remaining budget
         ],
@@ -199,7 +199,7 @@ const Dashboard = () => {
       {showLogoutModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <p className="text-lg font-semibold mb-4">Log out from Status?</p>
+            <p className="text-lg font-semibold mb-4">Log out from Dashboard?</p>
             <div className="flex justify-center gap-4">
               <button
                 className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700"
