@@ -44,7 +44,16 @@ cd ..
 cd frontend
 npm install
 ```
-
+If your using Codespace init the docker container for postgresql
+```
+docker pull postgres
+docker run --name financetracker -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=Admin1 -e POSTGRES_DB=financetracker -p 5432:5432 -d postgres:latest
+docker ps
+```
+Optional to start a container:
+```
+docker start financetracker
+```
 That is all for the basics
 
 This is made of
