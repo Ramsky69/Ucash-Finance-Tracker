@@ -68,15 +68,16 @@ WSGI_APPLICATION = 'financetracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'financetracker',
-        'USER': 'postgres',
-        'PASSWORD': 'Admin1',
-        'HOST': '172.17.0.2',  # Use the container's internal IP Bold Master 69
-        'PORT': '5432',
+        'NAME': 'financetracker',  # Replace with your database name
+        'USER': 'postgres',        # Replace with your database username
+        'PASSWORD': 'Admin1',  # Replace with your database password
+        'HOST': '172.17.0.2',      # Use the IP address of the database container
+        'PORT': '5432',            # Default PostgreSQL port
     }
 }
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Vite's default port
+    "https://ucash-finance-tracker-cxyyvoc7.vercel.app",  # Add your Vercel domain
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
