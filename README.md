@@ -68,6 +68,5 @@ This is made of
 2. Ralph Llorenz Baring
 3. Samuel Aque
 
-   yo
 
 
