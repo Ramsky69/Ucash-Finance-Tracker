@@ -22,7 +22,7 @@ Pls do (/) if it is done.
 To clone a repository:
 
 ```
-git clone https://github.com/Ramsky69/Finance-Tracker.git
+git clone https://github.com/Ramsky69/Ucash-Finance-Tracker.git
 
 ```
 then do
