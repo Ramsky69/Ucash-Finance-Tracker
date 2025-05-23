@@ -80,7 +80,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://ucash-finance-tracker.vercel.app",
     "https://ucash-finance-tracker-2rbou17kh.vercel.app",
     "https://ucash-finance-tracker-8eskct2sg.vercel.app",
-    "https://ucash-finance-tracker-8eskct2sg.vercel.app",  # <--- this is your current frontend!
+    "https://ucash-finance-tracker-du26j2blc.vercel.app",  # <--- ADD THIS LINE
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
