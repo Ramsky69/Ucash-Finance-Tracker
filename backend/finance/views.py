@@ -102,3 +102,8 @@ class UserBudgetView(APIView):
         )
         return Response({'budget': budget.limit}, status=status.HTTP_200_OK)
 
+class LoginView(APIView):
+    def post(self, request):
+        # Your login logic here
+        return Response({"message": "Login successful"}, status=status.HTTP_200_OK)
+
