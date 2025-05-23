@@ -15,7 +15,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'unsafe-default')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['your-app-name.onrender.com', 'your-custom-domain.com']  # Replace with your domains
+ALLOWED_HOSTS = ['ucash-finance-tracker.onrender.com', 'your-custom-domain.com']
 
 
 # Application definition
@@ -34,13 +34,13 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'financetracker.urls'
@@ -72,8 +72,9 @@ DATABASES = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Vite's default port
-    "https://ucash-finance-tracker-cxyyvoc7.vercel.app",  # Add your Vercel domain
+    "http://localhost:5173",
+    "https://ucash-finance-tracker-cxyyvoc7.vercel.app",
+    "https://ucash-finance-tracker.vercel.app/"
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
