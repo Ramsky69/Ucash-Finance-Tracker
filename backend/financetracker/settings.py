@@ -1,3 +1,5 @@
+import os
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -8,12 +10,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-dupv+@zxdew(s!iz#cuxts%2dz8^srf@i7kpz$xs(kjk*^!%8='
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'unsafe-default')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['your-app-name.onrender.com', 'your-custom-domain.com']  # Replace with your domains
 
 
 # Application definition
@@ -66,15 +68,9 @@ WSGI_APPLICATION = 'financetracker.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'financetracker',  # Replace with your database name
-        'USER': 'postgres',        # Replace with your database username
-        'PASSWORD': 'Admin1',  # Replace with your database password
-        'HOST': '172.17.0.2',      # Use the IP address of the database container
-        'PORT': '5432',            # Default PostgreSQL port
-    }
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Vite's default port
     "https://ucash-finance-tracker-cxyyvoc7.vercel.app",  # Add your Vercel domain
@@ -119,7 +115,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
