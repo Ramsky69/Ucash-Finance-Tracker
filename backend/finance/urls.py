@@ -1,12 +1,9 @@
 # finance/urls.py
 from django.contrib import admin
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from .views import UserBudgetView, RegisterView, LoginView, ProfileView
 from . import views
-from .views import UserBudgetView, RegisterView
-
-router = DefaultRouter()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -20,5 +17,4 @@ urlpatterns = [
     path('budgets/', views.BudgetListCreateView.as_view()),
     path('budgets/<int:pk>/', views.BudgetRetrieveUpdateDestroyView.as_view()),
     path('user-budget/', UserBudgetView.as_view(), name='user-budget'),
-    path('', include(router.urls)),
 ]

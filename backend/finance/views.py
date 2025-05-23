@@ -8,6 +8,7 @@ from .models import Transaction, Budget, Profile  # Add Profile model import
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from django.contrib.auth import authenticate
 
 # Register View
 class RegisterView(generics.CreateAPIView):
@@ -91,6 +92,26 @@ class UserBudgetView(APIView):
 
 class LoginView(APIView):
     def post(self, request):
-        # Your login logic here
-        return Response({"message": "Login successful"}, status=status.HTTP_200_OK)
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            from rest_framework_simplejwt.tokens import RefreshToken
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
+        return Response({'error': 'Invalid credentials'}, status=400)
+
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            profile = Profile.objects.get(user=request.user)
+            serializer = ProfileSerializer(profile)
+            return Response(serializer.data)
+        except Profile.DoesNotExist:
+            return Response({'error': 'Profile not found'}, status=404)
 

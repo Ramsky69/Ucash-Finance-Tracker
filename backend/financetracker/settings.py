@@ -1,9 +1,13 @@
 import os
-import dj_database_url
 from pathlib import Path
+import dotenv
+import dj_database_url
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+dotenv.load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -15,7 +19,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'unsafe-default')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['ucash-finance-tracker.onrender.com', 'your-custom-domain.com']
+ALLOWED_HOSTS = ['ucash-finance-tracker.onrender.com', 'your-custom-domain.com', "localhost",
+    "127.0.0.1",]
 
 
 # Application definition
@@ -68,13 +73,11 @@ WSGI_APPLICATION = 'financetracker.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default': dj_database_url.config()
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "https://ucash-finance-tracker-cxyyvoc7.vercel.app",
-    "https://ucash-finance-tracker.vercel.app/"
+    "https://ucash-finance-tracker.vercel.app",
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
