@@ -7,7 +7,6 @@ from . import views
 from .views import UserBudgetView, RegisterView
 
 router = DefaultRouter()
-router.register(r'profile', views.ProfileViewSet, basename='profile')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
