@@ -79,6 +79,7 @@ DATABASES = {
 CORS_ALLOWED_ORIGINS = [
     "https://ucash-finance-tracker.vercel.app",
     "https://ucash-finance-tracker-2rbou17kh.vercel.app",
+    "https://ucash-finance-tracker-8eskct2sg.vercel.app",  # <-- add this line
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
