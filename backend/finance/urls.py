@@ -3,7 +3,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView  # Import JWT viewspyth
 from . import views
-from .views import UserBudgetView
+from .views import UserBudgetView, RegisterView
 
 router = DefaultRouter()
 router.register(r'profile', views.ProfileViewSet, basename='profile')
@@ -21,4 +21,5 @@ urlpatterns = [
 
 urlpatterns += [
     path('api/user-budget/', UserBudgetView.as_view(), name='user-budget'),
+    path('register/', RegisterView.as_view(), name='register'),
 ]
