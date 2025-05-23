@@ -34,19 +34,6 @@ class RegisterView(generics.CreateAPIView):
         }, status=status.HTTP_201_CREATED)
     
 
-# finance/views.py
-class ProfileViewSet(viewsets.ModelViewSet):
-    serializer_class = ProfileSerializer
-    permission_classes = []
-
-    def get_queryset(self):
-        return Profile.objects.filter(user=self.request.user)
-
-    def get_object(self):
-        return self.request.user.profile
-
-    def perform_update(self, serializer):
-        serializer.save()
 
 # Transactions Views
 class TransactionListCreateView(generics.ListCreateAPIView):
