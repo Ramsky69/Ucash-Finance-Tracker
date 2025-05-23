@@ -4,7 +4,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from . import views
-from .views import UserBudgetView, RegisterView,
+from .views import UserBudgetView, RegisterView
 
 router = DefaultRouter()
 router.register(r'profile', views.ProfileViewSet, basename='profile')
