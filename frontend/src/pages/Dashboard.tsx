@@ -12,19 +12,19 @@ interface Transaction {
   description: string;
   category: string;
   date: string;
-  status: string; // Added for "Result" column
+  status: string;
 }
 
 const categoryColors: { [key: string]: string } = {
-  Housing: '#F87171', // Red
-  Transportation: '#A78BFA', // Purple
-  Food: '#60A5FA', // Blue
-  Utilities: '#FBBF24', // Yellow
-  Healthcare: '#A78BFA', // Purple
-  Insurance: '#F472B6', // Pink
-  Savings: '#10B981', // Teal
-  Entertainment: '#F59E0B', // Orange
-  Other: '#9CA3AF', // Gray
+  Housing: '#F87171',
+  Transportation: '#A78BFA',
+  Food: '#60A5FA',
+  Utilities: '#FBBF24',
+  Healthcare: '#A78BFA',
+  Insurance: '#F472B6',
+  Savings: '#10B981',
+  Entertainment: '#F59E0B',
+  Other: '#9CA3AF',
 };
 
 const Dashboard = () => {
@@ -37,12 +37,11 @@ const Dashboard = () => {
     date: '',
     status: 'Pending',
   });
-  const [sortBy, setSortBy] = useState<string>('Date'); // Default sorting by Date
-  const [budget, setBudget] = useState<number>(1000); // Default budget
+  const [sortBy, setSortBy] = useState<string>('Date');
+  const [budget, setBudget] = useState<number>(1000);
   const [totalExpenses, setTotalExpenses] = useState<number>(0);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-  // Fetch transactions on component mount
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
@@ -51,7 +50,7 @@ const Dashboard = () => {
         });
         const formattedTransactions = response.data.map((transaction) => ({
           ...transaction,
-          amount: parseFloat(transaction.amount as unknown as string) || 0, // Ensure amount is a number
+          amount: parseFloat(transaction.amount as unknown as string) || 0,
         }));
         setTransactions(formattedTransactions);
       } catch (error) {
@@ -81,17 +80,20 @@ const Dashboard = () => {
     fetchBudget();
   }, [token]);
 
-  // Recalculate total expenses whenever transactions change
   useEffect(() => {
     const total = transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
     setTotalExpenses(total);
   }, [transactions]);
 
   const handleAddTransaction = async () => {
+    if (!newTransaction.date) {
+      alert('Please select a date.');
+      return;
+    }
     try {
       const payload = {
         ...newTransaction,
-        amount: parseFloat(newTransaction.amount.toFixed(2)), // Ensure amount is a decimal
+        amount: parseFloat(newTransaction.amount.toFixed(2)),
         date: newTransaction.date, // Use the date string directly
       };
       const response = await api.post<Transaction>('/transactions/', payload, {
@@ -109,7 +111,7 @@ const Dashboard = () => {
       await api.delete(`/transactions/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setTransactions(transactions.filter((transaction) => transaction.id !== id)); // Remove transaction from the list
+      setTransactions(transactions.filter((transaction) => transaction.id !== id));
     } catch (error) {
       console.error('Error deleting transaction:', error);
     }
@@ -131,7 +133,7 @@ const Dashboard = () => {
   const handleBudgetChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const newBudget = parseFloat(e.target.value) || 0;
     setBudget(newBudget);
-  
+
     try {
       await api.post(
         '/user-budget/',
@@ -144,35 +146,34 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    logout(); 
+    logout();
     setShowLogoutModal(false);
   };
 
-  // Calculate totals for each category
   const categoryTotals = transactions.reduce((totals, transaction) => {
     totals[transaction.category] = (totals[transaction.category] || 0) + transaction.amount;
     return totals;
   }, {} as { [key: string]: number });
-  
+
   const chartData = {
-    labels: [...Object.keys(categoryTotals), 'Remaining Budget'], 
+    labels: [...Object.keys(categoryTotals), 'Remaining Budget'],
     datasets: [
       {
         data: [
           ...Object.values(categoryTotals),
-          Math.max(budget - totalExpenses, 0), 
+          Math.max(budget - totalExpenses, 0),
         ],
         backgroundColor: [
           ...Object.keys(categoryTotals).map(
-            (category) => categoryColors[category] || '#D1D5DB' 
+            (category) => categoryColors[category] || '#D1D5DB'
           ),
-          '#34D399', // Green for remaining budget
+          '#34D399',
         ],
         hoverBackgroundColor: [
           ...Object.keys(categoryTotals).map(
-            (category) => categoryColors[category] || '#9CA3AF' 
+            (category) => categoryColors[category] || '#9CA3AF'
           ),
-          '#10B981', // Darker green for remaining budget
+          '#10B981',
         ],
       },
     ],
@@ -352,7 +353,7 @@ const Dashboard = () => {
               <input
                 type="date"
                 className="mt-1 block w-full border-gray-600 rounded-md shadow-sm bg-gray-900 text-gray-300"
-                value={newTransaction.date} // date should be in 'YYYY-MM-DD' format
+                value={newTransaction.date}
                 onChange={(e) => setNewTransaction({ ...newTransaction, date: e.target.value })}
               />
             </div>
@@ -362,15 +363,15 @@ const Dashboard = () => {
                 type="number"
                 className="mt-1 block w-full border-gray-600 rounded-md shadow-sm bg-gray-900 text-gray-300"
                 placeholder="0.00"
-                value={isNaN(newTransaction.amount) ? '' : newTransaction.amount} // Show empty if amount is NaN
+                value={isNaN(newTransaction.amount) ? '' : newTransaction.amount}
                 onFocus={() => {
                   if (newTransaction.amount === 0) {
-                    setNewTransaction({ ...newTransaction, amount: NaN }); // Clear the input on focus if it's 0
+                    setNewTransaction({ ...newTransaction, amount: NaN });
                   }
                 }}
                 onBlur={(e) => {
                   if (e.target.value === '') {
-                    setNewTransaction({ ...newTransaction, amount: NaN }); // Reset to NaN if input is empty on blur
+                    setNewTransaction({ ...newTransaction, amount: NaN });
                   }
                 }}
                 onChange={(e) =>
