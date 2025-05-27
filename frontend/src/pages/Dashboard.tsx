@@ -352,7 +352,7 @@ const Dashboard = () => {
               <input
                 type="date"
                 className="mt-1 block w-full border-gray-600 rounded-md shadow-sm bg-gray-900 text-gray-300"
-                value={newTransaction.date}
+                value={newTransaction.date} // date should be in 'YYYY-MM-DD' format
                 onChange={(e) => setNewTransaction({ ...newTransaction, date: e.target.value })}
               />
             </div>
