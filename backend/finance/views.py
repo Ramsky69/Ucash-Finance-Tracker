@@ -1,5 +1,5 @@
 # finance/views.py
-from rest_framework import generics, status, viewsets
+from rest_framework import generics, status, viewsets, permissions
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -58,7 +58,6 @@ class TransactionListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]  # Enforce authentication
 
     def get_queryset(self):
-        # Filter transactions by the authenticated user
         return Transaction.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
@@ -68,6 +67,14 @@ class TransactionListCreateView(generics.ListCreateAPIView):
 class TransactionRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
+
+class TransactionViewSet(viewsets.ModelViewSet):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 # Budgets Views
 class BudgetListCreateView(generics.ListCreateAPIView):
