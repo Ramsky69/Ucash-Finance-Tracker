@@ -2,6 +2,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Transaction, Budget, Profile
+from datetime import datetime
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -32,6 +33,17 @@ class TransactionSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation['amount'] = float(instance.amount)  # Ensure amount is a number
         return representation
+
+    def validate_date(self, value):
+        # Accepts date as string in various formats and converts to date object
+        if isinstance(value, str):
+            for fmt in ("%Y-%m-%d", "%m/%d/%Y", "%d/%m/%Y"):
+                try:
+                    return datetime.strptime(value, fmt).date()
+                except ValueError:
+                    continue
+            raise serializers.ValidationError("Date must be in YYYY-MM-DD, MM/DD/YYYY, or DD/MM/YYYY format.")
+        return value
 
 class BudgetSerializer(serializers.ModelSerializer):
     class Meta:
