@@ -92,12 +92,12 @@ const Dashboard = () => {
       const payload = {
         ...newTransaction,
         amount: parseFloat(newTransaction.amount.toFixed(2)), // Ensure amount is a decimal
-        date: new Date(newTransaction.date).toISOString().slice(0, 10),   // Convert date to ISO format
+        date: newTransaction.date, // Use the date string directly
       };
       const response = await api.post<Transaction>('/transactions/', payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setTransactions([...transactions, response.data]); // Add new transaction to the list
+      setTransactions([...transactions, response.data]);
       setNewTransaction({ description: '', category: '', amount: 0, date: '', status: 'Pending' });
     } catch (error) {
       console.error('Error adding transaction:', error);
