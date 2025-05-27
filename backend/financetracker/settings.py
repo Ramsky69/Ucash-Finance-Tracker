@@ -81,7 +81,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://ucash-finance-tracker-2rbou17kh.vercel.app",
     "https://ucash-finance-tracker-8eskct2sg.vercel.app",
     "https://ucash-finance-tracker-du26j2blc.vercel.app",
-    "https://ucash-finance-tracker-l475d5m0b.vercel.app",  # Remove trailing slash
+    "https://ucash-finance-tracker-l475d5m0b.vercel.app",
+      "https://ucash-finance-tracker-dd6rc9i42.vercel.app",  # Remove trailing slash
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
