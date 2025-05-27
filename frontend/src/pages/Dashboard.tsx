@@ -92,7 +92,7 @@ const Dashboard = () => {
       const payload = {
         ...newTransaction,
         amount: parseFloat(newTransaction.amount.toFixed(2)), // Ensure amount is a decimal
-        date: new Date(newTransaction.date).toISOString(),   // Convert date to ISO format
+        date: new Date(newTransaction.date).toISOString().slice(0, 10),   // Convert date to ISO format
       };
       const response = await api.post<Transaction>('/transactions/', payload, {
         headers: { Authorization: `Bearer ${token}` },
