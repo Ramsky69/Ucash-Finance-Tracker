@@ -327,6 +327,7 @@ const Dashboard = () => {
                 placeholder="e.g., Grocery Shopping"
                 value={newTransaction.description}
                 onChange={(e) => setNewTransaction({ ...newTransaction, description: e.target.value })}
+                required
               />
             </div>
             <div className="mb-4">
@@ -335,6 +336,7 @@ const Dashboard = () => {
                 className="mt-1 block w-full border-gray-600 rounded-md shadow-sm bg-gray-900 text-gray-300"
                 value={newTransaction.category}
                 onChange={(e) => setNewTransaction({ ...newTransaction, category: e.target.value })}
+                required
               >
                 <option value="">Select a category</option>
                 <option value="Housing">Housing</option>
@@ -355,6 +357,7 @@ const Dashboard = () => {
                 className="mt-1 block w-full border-gray-600 rounded-md shadow-sm bg-gray-900 text-gray-300"
                 value={newTransaction.date}
                 onChange={(e) => setNewTransaction({ ...newTransaction, date: e.target.value })}
+                required
               />
             </div>
             <div className="mb-4">
@@ -377,6 +380,7 @@ const Dashboard = () => {
                 onChange={(e) =>
                   setNewTransaction({ ...newTransaction, amount: parseFloat(e.target.value) || 0 })
                 }
+                required
               />
             </div>
             <button
