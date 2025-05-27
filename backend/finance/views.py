@@ -55,14 +55,18 @@ class RegisterView(generics.CreateAPIView):
 # Transactions Views
 class TransactionListCreateView(generics.ListCreateAPIView):
     serializer_class = TransactionSerializer
-    permission_classes = [IsAuthenticated]  # Enforce authentication
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Transaction.objects.filter(user=self.request.user)
 
-    def perform_create(self, serializer):
-        # Assign the authenticated user to the transaction
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            print(serializer.errors)  # This will show in your server logs
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         serializer.save(user=self.request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class TransactionRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Transaction.objects.all()
