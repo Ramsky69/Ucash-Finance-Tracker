@@ -38,8 +38,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,6 +77,7 @@ DATABASES = {
 }
 
 CORS_ALLOWED_ORIGINS = [
+    "https://ucash-finance-tracker.onrender.com",
     "https://ucash-finance-tracker.vercel.app",
     "https://ucash-finance-tracker-2rbou17kh.vercel.app",
     "https://ucash-finance-tracker-8eskct2sg.vercel.app",
