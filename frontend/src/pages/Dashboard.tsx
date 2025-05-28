@@ -298,7 +298,7 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody className="bg-gray-900 divide-y divide-gray-700">
-                {transactions.map((transaction) => (
+                {currentMonthTx.map((transaction) => (
                   <tr key={transaction.id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                       {transaction.description}
