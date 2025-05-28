@@ -150,10 +150,26 @@ const Dashboard = () => {
     setShowLogoutModal(false);
   };
 
-  const categoryTotals = transactions.reduce((totals, transaction) => {
+  // Helper to check if a transaction is in the current month and year
+  const isThisMonth = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    return (
+      date.getFullYear() === now.getFullYear() &&
+      date.getMonth() === now.getMonth()
+    );
+  };
+
+  // Filter transactions for this month
+  const thisMonthTransactions = transactions.filter((t) => isThisMonth(t.date));
+
+  // Calculate totals for this month only
+  const categoryTotals = thisMonthTransactions.reduce((totals, transaction) => {
     totals[transaction.category] = (totals[transaction.category] || 0) + transaction.amount;
     return totals;
   }, {} as { [key: string]: number });
+
+  const totalExpenses = thisMonthTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
 
   const chartData = {
     labels: [...Object.keys(categoryTotals), 'Remaining Budget'],
