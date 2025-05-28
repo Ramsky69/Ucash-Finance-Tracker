@@ -162,36 +162,23 @@ const Dashboard = () => {
 
   // Separate transactions
   const currentMonthTx = transactions.filter((t) => isThisMonth(t.date));
-  const otherMonthTx = transactions.filter((t) => !isThisMonth(t.date));
 
-  // Merge current month transactions by category
+  // Build chart entries only for current month transactions
   const categoryTotals = currentMonthTx.reduce((totals, transaction) => {
     totals[transaction.category] = (totals[transaction.category] || 0) + transaction.amount;
     return totals;
   }, {} as { [key: string]: number });
 
-  // Build chart entries for current month and for each separate transaction outside this month
-  const currentLabels = Object.keys(categoryTotals);
-  const currentData = Object.values(categoryTotals);
-  const currentColors = currentLabels.map(
+  const chartLabels = Object.keys(categoryTotals);
+  const chartDataValues = Object.values(categoryTotals);
+  const chartColors = chartLabels.map(
     (cat) => categoryColors[cat] || '#D1D5DB'
   );
 
-  // For non-current month transactions, show each separately
-  const otherLabels = otherMonthTx.map((tx) => `${tx.category} (${tx.description})`);
-  const otherData = otherMonthTx.map((tx) => tx.amount);
-  const otherColors = otherMonthTx.map(
-    (tx) => categoryColors[tx.category] || '#D1D5DB'
-  );
-
-  // Combine current and other month entries. You might also want to add Remaining Budget as before.
-  const chartLabels = [...currentLabels, ...otherLabels, 'Remaining Budget'];
-  const chartDataValues = [
-    ...currentData,
-    ...otherData,
-    Math.max(budget - (currentData.reduce((sum, x) => sum + x, 0) + otherData.reduce((sum, x) => sum + x, 0)), 0)
-  ];
-  const chartColors = [...currentColors, ...otherColors, '#34D399'];
+  // Add Remaining Budget
+  chartLabels.push('Remaining Budget');
+  chartDataValues.push(Math.max(budget - chartDataValues.reduce((sum, x) => sum + x, 0), 0));
+  chartColors.push('#34D399');
 
   const chartData = {
     labels: chartLabels,
