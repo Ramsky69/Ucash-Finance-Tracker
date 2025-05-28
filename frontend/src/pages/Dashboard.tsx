@@ -333,7 +333,23 @@ const Dashboard = () => {
         {/* Form Section (Right) */}
         <aside className="w-1/4 bg-gray-800 p-6 rounded-lg shadow-lg">
           <h2 className="text-lg font-semibold mb-4">Category</h2>
-          <form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (
+                !newTransaction.description.trim() ||
+                !newTransaction.category ||
+                !newTransaction.date ||
+                !newTransaction.amount ||
+                isNaN(newTransaction.amount) ||
+                newTransaction.amount <= 0
+              ) {
+                alert('Please fill in all required fields with valid values.');
+                return;
+              }
+              handleAddTransaction();
+            }}
+          >
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-300">Purpose</label>
               <input
@@ -401,19 +417,17 @@ const Dashboard = () => {
               />
             </div>
             <button
-              type="button"
+              type="submit"
               className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
-              onClick={handleAddTransaction}
             >
-              + Add Transactiondd Transaction
-            </button>tton>
-          </form>orm>
-        </aside>aside>
-      </main>  </main>
-    </div>  </div>
-  );  );
+              + Add Transaction
+            </button>
+          </form>
+        </aside>
+      </main>
+    </div>
+  );
 };
 
 
-export default Dashboard;
 export default Dashboard;
