@@ -262,7 +262,7 @@ const Dashboard = () => {
         {/* Table Section (Middle) */}
         <div className="flex-1">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-4xl font-bold">Transaction</h1>
+            <h1 className="text-4xl font-bold">This Month's Transaction</h1>
             <div>
               <label htmlFor="sort" className="mr-2 text-sm font-medium text-gray-300">
                 Sort by:
