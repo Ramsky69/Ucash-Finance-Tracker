@@ -81,7 +81,10 @@ const Dashboard = () => {
   }, [token]);
 
   useEffect(() => {
-    const total = transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+    // Only sum current month transactions for expenses
+    const total = transactions
+      .filter((t) => isThisMonth(t.date))
+      .reduce((sum, transaction) => sum + transaction.amount, 0);
     setTotalExpenses(total);
   }, [transactions]);
 
