@@ -160,37 +160,46 @@ const Dashboard = () => {
     );
   };
 
-  // Filter transactions for this month
-  const thisMonthTransactions = transactions.filter((t) => isThisMonth(t.date));
+  // Separate transactions
+  const currentMonthTx = transactions.filter((t) => isThisMonth(t.date));
+  const otherMonthTx = transactions.filter((t) => !isThisMonth(t.date));
 
-  // Calculate totals for this month only
-  const categoryTotals = thisMonthTransactions.reduce((totals, transaction) => {
+  // Merge current month transactions by category
+  const categoryTotals = currentMonthTx.reduce((totals, transaction) => {
     totals[transaction.category] = (totals[transaction.category] || 0) + transaction.amount;
     return totals;
   }, {} as { [key: string]: number });
 
-  const totalExpenses = thisMonthTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+  // Build chart entries for current month and for each separate transaction outside this month
+  const currentLabels = Object.keys(categoryTotals);
+  const currentData = Object.values(categoryTotals);
+  const currentColors = currentLabels.map(
+    (cat) => categoryColors[cat] || '#D1D5DB'
+  );
+
+  // For non-current month transactions, show each separately
+  const otherLabels = otherMonthTx.map((tx) => `${tx.category} (${tx.description})`);
+  const otherData = otherMonthTx.map((tx) => tx.amount);
+  const otherColors = otherMonthTx.map(
+    (tx) => categoryColors[tx.category] || '#D1D5DB'
+  );
+
+  // Combine current and other month entries. You might also want to add Remaining Budget as before.
+  const chartLabels = [...currentLabels, ...otherLabels, 'Remaining Budget'];
+  const chartDataValues = [
+    ...currentData,
+    ...otherData,
+    Math.max(budget - (currentData.reduce((sum, x) => sum + x, 0) + otherData.reduce((sum, x) => sum + x, 0)), 0)
+  ];
+  const chartColors = [...currentColors, ...otherColors, '#34D399'];
 
   const chartData = {
-    labels: [...Object.keys(categoryTotals), 'Remaining Budget'],
+    labels: chartLabels,
     datasets: [
       {
-        data: [
-          ...Object.values(categoryTotals),
-          Math.max(budget - totalExpenses, 0),
-        ],
-        backgroundColor: [
-          ...Object.keys(categoryTotals).map(
-            (category) => categoryColors[category] || '#D1D5DB'
-          ),
-          '#34D399',
-        ],
-        hoverBackgroundColor: [
-          ...Object.keys(categoryTotals).map(
-            (category) => categoryColors[category] || '#9CA3AF'
-          ),
-          '#10B981',
-        ],
+        data: chartDataValues,
+        backgroundColor: chartColors,
+        hoverBackgroundColor: chartColors,
       },
     ],
   };
