@@ -396,6 +396,8 @@ const Dashboard = () => {
                   setNewTransaction({ ...newTransaction, amount: parseFloat(e.target.value) || 0 })
                 }
                 required
+                min="0.01"
+                step="0.01"
               />
             </div>
             <button
@@ -403,13 +405,15 @@ const Dashboard = () => {
               className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
               onClick={handleAddTransaction}
             >
-              + Add Transaction
-            </button>
-          </form>
-        </aside>
-      </main>
-    </div>
-  );
+              + Add Transactiondd Transaction
+            </button>tton>
+          </form>orm>
+        </aside>aside>
+      </main>  </main>
+    </div>  </div>
+  );  );
 };
 
+
+export default Dashboard;
 export default Dashboard;
