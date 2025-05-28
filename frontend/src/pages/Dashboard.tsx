@@ -314,8 +314,8 @@ const Dashboard = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <button
-                        className="text-red-500 hover:text-red-700"
                         onClick={() => handleDeleteTransaction(transaction.id)}
+                        className="text-red-500 hover:text-red-700"
                       >
                         Delete
                       </button>
