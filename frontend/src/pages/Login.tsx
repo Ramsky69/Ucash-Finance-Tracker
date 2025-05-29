@@ -78,9 +78,7 @@ const Login = () => {
                 />
                 <span className="text-sm text-gray-700">Remember me</span>
               </label>
-              <Link to="/forgot-password" className="text-sm text-blue-500 underline">
-                Forgot password?
-              </Link>
+              
             </div>
             <button
               type="submit"
