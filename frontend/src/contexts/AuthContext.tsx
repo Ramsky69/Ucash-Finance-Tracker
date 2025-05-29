@@ -25,8 +25,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setToken(response.data.access);
       localStorage.setItem('token', response.data.access);
     } catch (error) {
-      console.error('Login failed:', error);
-      // Handle error (e.g., show error message)
+      throw new Error('Invalid username or password');
     }
   };
 

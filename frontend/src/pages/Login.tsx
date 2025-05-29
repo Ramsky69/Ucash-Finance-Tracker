@@ -7,12 +7,18 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(username, password);
-    navigate('/dashboard');
+    setError(null);
+    try {
+      await login(username, password);
+      navigate('/dashboard');
+    } catch (err) {
+      setError('Invalid username or password');
+    }
   };
 
   return (
@@ -34,6 +40,7 @@ const Login = () => {
         <div className="w-1/2 p-8">
           <h1 className="text-3xl font-bold mb-6 text-gray-900 text-center">Login</h1>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {error && <div className="text-red-500 mb-2">{error}</div>}
             <div>
               <label className="block text-sm font-medium text-gray-700">Username</label>
               <input
